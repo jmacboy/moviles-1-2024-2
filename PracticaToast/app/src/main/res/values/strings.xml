@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">PracticaToast</string>
+    <string name="mostrar_mensaje">Mostrar mensaje</string>
+    <string name="hola">Hola %1$s</string>
+    <string name="mensaje_de_prueba">Mensaje de prueba</string>
+    <string name="hola_mundo">Hola Mundo</string>
+</resources>

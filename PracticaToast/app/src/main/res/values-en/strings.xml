@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PracticaToast</string>
+    <string name="mostrar_mensaje">Show Message</string>
+    <string name="hola">Hello %1$s</string>
+    <string name="mensaje_de_prueba">Test message</string>
+    <string name="hola_mundo">Hello World</string>
+</resources>
