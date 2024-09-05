@@ -4,6 +4,7 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -19,7 +20,7 @@ import com.example.listapersonas.ui.adapters.ContactAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ContactAdapter.OnContactClickListener {
     private val datalist = arrayListOf(
         Contact("Juan Perez", "1234567890"),
         Contact("Maria Lopez", "0987654321"),
@@ -58,30 +59,39 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        rvContactList.adapter = ContactAdapter(datalist)
+        rvContactList.adapter = ContactAdapter(datalist, this)
         rvContactList.layoutManager = LinearLayoutManager(this).apply {
             orientation = LinearLayoutManager.VERTICAL
         }
     }
 
-    private fun buildAlertDialog() {
+    private fun buildAlertDialog(contact: Contact? = null) {
+
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setTitle("Agregar contacto")
+        builder.setTitle("Formulario de contacto")
 
 
         val viewInflated: View = LayoutInflater.from(this)
             .inflate(R.layout.form_layout, null, false)
 
-        val txtNewContactName: TextView = viewInflated.findViewById(R.id.txtNewContactName)
-        val txtNewContactPhone: TextView = viewInflated.findViewById(R.id.txtNewContactPhone)
-
+        val txtNewContactName: EditText = viewInflated.findViewById(R.id.txtNewContactName)
+        val txtNewContactPhone: EditText = viewInflated.findViewById(R.id.txtNewContactPhone)
+        txtNewContactName.setText(contact?.name)
+        txtNewContactPhone.setText(contact?.phone)
         builder.setView(viewInflated)
 
         builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
             dialog.dismiss()
             val name = txtNewContactName.text.toString()
             val phone = txtNewContactPhone.text.toString()
-            addContactToList(name, phone)
+
+            if (contact != null) {
+                contact.name = name
+                contact.phone = phone
+                editContactFromList(contact)
+            } else {
+                addContactToList(name, phone)
+            }
         }
         builder.setNegativeButton(android.R.string.cancel) { dialog, _ ->
             dialog.cancel()
@@ -90,10 +100,23 @@ class MainActivity : AppCompatActivity() {
         builder.show()
     }
 
+    private fun editContactFromList(contact: Contact) {
+        val adapter = rvContactList.adapter as ContactAdapter
+      adapter.itemUpdated(contact)
+    }
+
     private fun addContactToList(name: String, phone: String) {
         val contact = Contact(name, phone)
-//        Toast.makeText(this@MainActivity, contact.toString(), Toast.LENGTH_SHORT).show()
         val adapter = rvContactList.adapter as ContactAdapter
         adapter.itemAdded(contact)
+    }
+
+    override fun onContactEditClickListener(contact: Contact) {
+        buildAlertDialog(contact)
+    }
+
+    override fun onContactDeleteClickListener(contact: Contact) {
+        val adapter = rvContactList.adapter as ContactAdapter
+        adapter.itemDeleted(contact)
     }
 }
