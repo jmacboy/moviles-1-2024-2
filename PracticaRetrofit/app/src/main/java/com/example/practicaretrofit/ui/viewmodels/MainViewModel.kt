@@ -1,4 +1,4 @@
-package com.example.practicaretrofit
+package com.example.practicaretrofit.ui.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,11 +10,15 @@ class MainViewModel : ViewModel() {
         value = ""
     }
     val title: LiveData<String> = _title
-
+    private val _body = MutableLiveData<String>().apply {
+        value = ""
+    }
+    val body: LiveData<String> = _body
     fun getPostById(id: Int) {
         PostRepository.getPostById(id,
             onSuccess = {
                 _title.value = it.title
+                _body.value = it.body
                 println("Post: $it")
             }, onError = {
                 println("Error: $it")

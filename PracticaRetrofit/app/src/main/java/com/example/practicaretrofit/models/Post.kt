@@ -6,3 +6,4 @@ data class Post (
     val title: String,
     val body: String
 )
+typealias Posts = ArrayList<Post>
