@@ -22,6 +22,13 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         setupEventListeners()
+        setupViewModelObservers()
+    }
+
+    private fun setupViewModelObservers() {
+        viewModel.title.observe(this){
+            binding.lblTitle.text = it
+        }
     }
 
     private fun setupEventListeners() {
