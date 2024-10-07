@@ -10,7 +10,9 @@ import com.example.practicaretrofit.databinding.PostItemLayoutBinding
 import com.example.practicaretrofit.models.Post
 import com.example.practicaretrofit.models.Posts
 
-class PostListAdapter() : RecyclerView.Adapter<PostListAdapter.PostItemViewHolder>() {
+class PostListAdapter(
+    private val listener: PostItemListener
+) : RecyclerView.Adapter<PostListAdapter.PostItemViewHolder>() {
     private var postList: Posts = arrayListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostItemViewHolder {
         val binding =
@@ -23,7 +25,7 @@ class PostListAdapter() : RecyclerView.Adapter<PostListAdapter.PostItemViewHolde
     }
 
     override fun onBindViewHolder(holder: PostItemViewHolder, position: Int) {
-        holder.bind(postList[position])
+        holder.bind(postList[position], listener)
     }
 
     fun updateData(it: Posts) {
@@ -33,8 +35,15 @@ class PostListAdapter() : RecyclerView.Adapter<PostListAdapter.PostItemViewHolde
 
     class PostItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val lblPostItemTitle: TextView = itemView.findViewById(R.id.lblPostItemTitle)
-        fun bind(post: Post) {
+        fun bind(post: Post, listener: PostItemListener) {
             lblPostItemTitle.text = post.title
+            itemView.setOnClickListener {
+                listener.onPostItemClick(post)
+            }
         }
+    }
+
+    interface PostItemListener {
+        fun onPostItemClick(post: Post)
     }
 }

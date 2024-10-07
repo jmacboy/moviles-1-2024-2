@@ -9,10 +9,11 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.practicaretrofit.R
 import com.example.practicaretrofit.databinding.ActivityPostListBinding
+import com.example.practicaretrofit.models.Post
 import com.example.practicaretrofit.ui.adapters.PostListAdapter
 import com.example.practicaretrofit.ui.viewmodels.PostListViewModel
 
-class PostListActivity : AppCompatActivity() {
+class PostListActivity : AppCompatActivity(), PostListAdapter.PostItemListener {
     lateinit var binding: ActivityPostListBinding
     private val viewModel: PostListViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +32,7 @@ class PostListActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        val adapter = PostListAdapter()
+        val adapter = PostListAdapter(this)
         binding.rvPostList.apply {
             this.adapter = adapter
             layoutManager = LinearLayoutManager(this@PostListActivity)
@@ -43,5 +44,10 @@ class PostListActivity : AppCompatActivity() {
             val adapter = binding.rvPostList.adapter as PostListAdapter
             adapter.updateData(it)
         }
+    }
+
+    override fun onPostItemClick(post: Post) {
+        val intent = PostDetailActivity.newIntent(this, post.id)
+        startActivity(intent)
     }
 }

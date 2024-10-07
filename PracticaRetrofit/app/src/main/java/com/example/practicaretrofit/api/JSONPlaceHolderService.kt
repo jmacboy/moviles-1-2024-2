@@ -1,5 +1,6 @@
 package com.example.practicaretrofit.api
 
+import com.example.practicaretrofit.models.Comments
 import com.example.practicaretrofit.models.Post
 import com.example.practicaretrofit.models.Posts
 import retrofit2.Call
@@ -12,4 +13,7 @@ interface JSONPlaceHolderService {
 
     @GET("/posts")
     fun getPostList(): Call<Posts>
+
+    @GET("/posts/{id}/comments")
+    fun getCommentsByPost(@Path("id") id: Int): Call<Comments>
 }

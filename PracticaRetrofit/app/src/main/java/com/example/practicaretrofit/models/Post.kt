@@ -1,8 +1,8 @@
 package com.example.practicaretrofit.models
 
 data class Post (
-    val userId: Long,
-    val id: Long,
+    val userId: Int,
+    val id: Int,
     val title: String,
     val body: String
 )
