@@ -13,7 +13,10 @@
         android:theme="@style/Theme.PracticaBD"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".dal.ui.activities.PersonDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".dal.ui.activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
