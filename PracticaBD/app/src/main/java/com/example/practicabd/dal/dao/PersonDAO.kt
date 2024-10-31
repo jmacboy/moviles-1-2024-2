@@ -15,6 +15,9 @@ interface PersonDAO {
     @Query("SELECT * FROM Person WHERE id = :id")
     fun getById(id: Long): Person?
 
+    @Query("SELECT * FROM Person WHERE name LIKE '%' || :name || '%' OR lastName LIKE '%' || :lastName || '%'")
+    fun searchByNameAndLastName(name: String, lastName: String): List<Person>
+
     @Insert
     fun insert(person: Person)
 

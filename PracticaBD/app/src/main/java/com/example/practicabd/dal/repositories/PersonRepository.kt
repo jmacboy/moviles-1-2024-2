@@ -18,4 +18,18 @@ object PersonRepository {
         RoomRepository.getRoomInstance(context)
             .personDAO().update(person)
     }
+
+    fun selectById(context: Context, id: Long): Person? {
+        return RoomRepository.getRoomInstance(context)
+            .personDAO().getById(id)
+    }
+
+    fun delete(context: Context, person: Person) {
+        RoomRepository.getRoomInstance(context)
+            .personDAO().delete(person)
+    }
+    fun searchByNameAndLastName(context: Context, name: String, lastName: String): List<Person> {
+        return RoomRepository.getRoomInstance(context)
+            .personDAO().searchByNameAndLastName(name, lastName)
+    }
 }

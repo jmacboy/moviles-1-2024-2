@@ -16,4 +16,13 @@ class MainViewModel : ViewModel() {
     fun loadPersons(context: Context) {
         _personList.value = PersonRepository.selectAll(context)
     }
+
+    fun deletePerson(context: Context, person: Person) {
+        PersonRepository.delete(context, person)
+    }
+
+    fun searchByNameAndLastName(context: Context, name: String, lastName: String) {
+        _personList.value =
+            PersonRepository.searchByNameAndLastName(context, name, lastName)
+    }
 }
